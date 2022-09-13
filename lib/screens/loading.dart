@@ -1,7 +1,5 @@
 import 'package:blog/constant.dart';
 import 'package:blog/models/api_response.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/material.dart';
 
 import '../services/user_service.dart';

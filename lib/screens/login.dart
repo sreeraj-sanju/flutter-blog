@@ -1,6 +1,9 @@
+import 'package:blog/models/api_response.dart';
 import 'package:flutter/material.dart';
 
 import '../constant.dart';
+import '../services/user_service.dart';
+import 'home.dart';
 import 'register.dart';
 
 class Login extends StatefulWidget {
@@ -11,9 +14,25 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+
+  // VARIABLE USED FOR TAKING THE VALUES
   final GlobalKey<FormState> formkey = GlobalKey<FormState>();
   TextEditingController txtEmail = TextEditingController();
   TextEditingController password = TextEditingController();
+
+  // FUNCTION FOR LOGIN API CALL
+  void _LoginUser() async{
+    ApiResponse response = await login(txtEmail.text, password.text);
+    
+    if(response.error==null){
+       Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(builder: (context) => Home()), (route) => false);
+    }else{
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text("$response.error"),
+        ));
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,7 +66,7 @@ class _LoginState extends State<Login> {
             }),
             const SizedBox(height: 10,),
             srLogRegHint("Don't have an account?", " Register", (){
-              Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>register()), (route)=>false);
+              Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>Register()), (route)=>false);
             })
           ]
         )
