@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
-const baseUrl = "http://localhost:8000/api";
+const baseUrl = "http://localhost:80002/api";
 const loginUrl = "$baseUrl/login";
 const registerUrl = "$baseUrl/register";
 const userUrl = "$baseUrl/get_user";

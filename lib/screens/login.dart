@@ -48,14 +48,14 @@ class _LoginState extends State<Login> {
             TextFormField(
               keyboardType: TextInputType.emailAddress,
               controller: txtEmail,
-              validator: (val)=> val!.isEmpty ? "Invalid Eamil Address": null,
+              validator: (val)=> val!.isEmpty ? "Enter E-mail Address": null,
               decoration: textInputDecor('Email')
             ),
             const SizedBox(height: 10,),
             TextFormField(
               obscureText: true,
               controller: password,
-              validator: (val)=> val!.isEmpty ? "Required atleast 4 characters": null,
+              validator: (val)=> val!.isEmpty ? "Enter the password": null,
               decoration: textInputDecor('Password')
             ),
             const SizedBox(height: 10,),
