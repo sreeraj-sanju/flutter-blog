@@ -17,10 +17,14 @@ class _LoadingState extends State<Loading> {
   // function for check the user token available or not
   Future<void> _loadUserInfo() async {
     int token = await getToken();
-    if (token == 0) {
+    // if (token == 0) {
+    //   Navigator.of(context).pushAndRemoveUntil(
+    //       MaterialPageRoute(builder: (context) => Login()), (route) => false);
+    // } 
+     if (token != 0) {
       Navigator.of(context).pushAndRemoveUntil(
-          MaterialPageRoute(builder: (context) => Login()), (route) => false);
-    } else {
+          MaterialPageRoute(builder: (context) => Home()), (route) => false);
+    }else {
       ApiResponse response = await user_details();
       if (response.error == null) {
         Navigator.of(context).pushAndRemoveUntil(
