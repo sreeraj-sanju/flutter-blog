@@ -1,7 +1,10 @@
 import 'package:blog/models/api_response.dart';
+import 'package:blog/screens/loading.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../constant.dart';
+import '../models/user.dart';
 import '../services/user_service.dart';
 import 'home.dart';
 import 'register.dart';
@@ -19,19 +22,29 @@ class _LoginState extends State<Login> {
   final GlobalKey<FormState> formkey = GlobalKey<FormState>();
   TextEditingController txtEmail = TextEditingController();
   TextEditingController password = TextEditingController();
-
+  bool loading = false;
   // FUNCTION FOR LOGIN API CALL
   void _LoginUser() async{
     ApiResponse response = await login(txtEmail.text, password.text);
     
     if(response.error==null){
-       Navigator.of(context).pushAndRemoveUntil(
-            MaterialPageRoute(builder: (context) => Home()), (route) => false);
+       _saveAndRedirectToHome(response.data as User);
     }else{
+      setState(() {
+        loading = false;
+      });
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text("$response.error"),
+          content: Text("${response.error}"),
         ));
     }
+  }
+  void _saveAndRedirectToHome(User user) async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    await pref.setInt('token', user.token ?? 0);
+    // await pref.setInt('token', user.id ?? 0);
+     // ignore: use_build_context_synchronously
+     Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(builder: (context) => const Home()), (route) => false);
   }
   @override
   Widget build(BuildContext context) {
@@ -59,9 +72,15 @@ class _LoginState extends State<Login> {
               decoration: textInputDecor('Password')
             ),
             const SizedBox(height: 10,),
+            loading ? const Center(child: CircularProgressIndicator(
+              backgroundColor: Colors.white70,
+            ),):
             srButton('Login', (){
               if(formkey.currentState!.validate()){
-                
+                setState(() {
+                  loading = true;
+                   _LoginUser();
+                });
               }
             }),
             const SizedBox(height: 10,),

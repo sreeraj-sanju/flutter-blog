@@ -1,9 +1,9 @@
 import 'dart:convert';
-import 'package:blog/models/api_response.dart';
-import 'package:blog/models/user.dart';
+import '/models/api_response.dart';
+import '/models/user.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
-import '../constant.dart';
+import '/constant.dart';
 
 // START FUNCTION FOR LOGIN
 Future<ApiResponse> login(String email, String password) async {
@@ -62,7 +62,7 @@ Future<ApiResponse> user_details() async {
   ApiResponse apiResponse = ApiResponse();
 
   try {
-    String token = await getToken();
+    int token = await getToken();
     final response = await http.get(
       Uri.parse(userUrl),
       headers: {'Accept': 'application/json', 'Authorization': 'Bearer $token'},
@@ -84,9 +84,9 @@ Future<ApiResponse> user_details() async {
 // END FUNCTION FOR USER DETAILS
 
 // START FUNCTION FOR GET TOKEN FROM SHARED PREFERENCES
-Future<String> getToken() async {
+Future<int> getToken() async {
   SharedPreferences pref = await SharedPreferences.getInstance();
-  return pref.getString('token') ?? '';
+  return pref.getInt('token') ?? 0;
 }
 //END FUNCTION FOR GET TOKEN FROM SHARED PREFERENCES
 
