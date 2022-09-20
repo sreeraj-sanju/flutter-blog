@@ -1,9 +1,9 @@
 //Routes
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 
-const baseUrl = "http://localhost:80002/api";
-const loginUrl = "$baseUrl/login";
+// const baseUrl = "http://localhost:8000/api";
+const baseUrl = "http://52.37.80.33/api";
+const loginUrl = "$baseUrl/blog_login";
 const registerUrl = "$baseUrl/register";
 const userUrl = "$baseUrl/get_user";
 //Errors

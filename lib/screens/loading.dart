@@ -16,11 +16,15 @@ class Loading extends StatefulWidget {
 class _LoadingState extends State<Loading> {
   // function for check the user token available or not
   Future<void> _loadUserInfo() async {
-    String token = await getToken();
-    if (token == '') {
+    int token = await getToken();
+    // if (token == 0) {
+    //   Navigator.of(context).pushAndRemoveUntil(
+    //       MaterialPageRoute(builder: (context) => Login()), (route) => false);
+    // } 
+     if (token != 0) {
       Navigator.of(context).pushAndRemoveUntil(
-          MaterialPageRoute(builder: (context) => Login()), (route) => false);
-    } else {
+          MaterialPageRoute(builder: (context) => Home()), (route) => false);
+    }else {
       ApiResponse response = await user_details();
       if (response.error == null) {
         Navigator.of(context).pushAndRemoveUntil(
@@ -46,7 +50,10 @@ class _LoadingState extends State<Loading> {
   Widget build(BuildContext context) {
     return Container(
       height: MediaQuery.of(context).size.height,
-      child: Center(child: CircularProgressIndicator()),
+      color: const Color.fromARGB(255, 255, 255, 255),
+      child: const Center(child: CircularProgressIndicator(
+        backgroundColor: Colors.white70,
+      )),
     );
   }
 }
