@@ -10,6 +10,8 @@ class PostScreen extends StatefulWidget {
 class _PostScreenState extends State<PostScreen> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Container(
+      child: const Center(child: Text("Posts")),
+    );
   }
 }
