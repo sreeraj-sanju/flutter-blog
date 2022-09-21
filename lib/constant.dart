@@ -6,6 +6,9 @@ const baseUrl = "http://52.37.80.33/api";
 const loginUrl = "$baseUrl/blog_login";
 const registerUrl = "$baseUrl/register";
 const userUrl = "$baseUrl/get_user";
+const getPostUrl = "$baseUrl/getPost";
+const createPostUrl = "$baseUrl/createPost";
+
 //Errors
 const serviceError = "Server Error";
 

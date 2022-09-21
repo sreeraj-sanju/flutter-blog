@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import '/models/api_response.dart';
 import '/models/user.dart';
 import 'package:http/http.dart' as http;
@@ -103,3 +104,10 @@ Future<bool> logout() async {
   return await pref.remove('token');
 }
 // END FUNCTION FOR LOG OUT
+
+// START FUNCTION FOR BASE 64 ENCODING
+String? getStringImage(File? file){
+  if(file == null) return null;
+  return base64Encode(file.readAsBytesSync());
+}
+// END FUNCTION FOR BASE 64 ENCODING
