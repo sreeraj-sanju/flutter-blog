@@ -4,6 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../constant.dart';
+import '../models/api_response.dart';
+import '../services/post_service.dart';
+import '../services/user_service.dart';
+import 'login.dart';
 
 class PostForm extends StatefulWidget {
   const PostForm({Key? key}) : super(key: key);
@@ -28,6 +32,26 @@ class _PostFormState extends State<PostForm> {
       setState(() {
         _imageFile = File(pickedFile.path);
       });
+    }
+  }
+
+  void _createPost() async {
+    String? image = _imageFile == null ? null:getStringImage(_imageFile);
+    ApiResponse response = await createPost(blogData.text, image);
+    if(response.error == null){
+      Navigator.of(context).pop();
+    }else if(response.error == unauthorized){
+      logout().then((value) => {
+              Navigator.of(context).pushAndRemoveUntil(
+                MaterialPageRoute(builder: (context) => const Login()), (route) => false)
+      });
+    }else{
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text("${response.error}"),
+        ));
+        setState(() {
+          loading = !loading;
+        });
     }
   }
   @override
@@ -79,7 +103,8 @@ class _PostFormState extends State<PostForm> {
             padding: const EdgeInsets.symmetric(horizontal: 8),
             child: srButton('Post', (){
              if(formkey.currentState!.validate()){
-               setState(() {
+              _createPost();
+              setState(() {
                  loading = !loading;
                });
               };

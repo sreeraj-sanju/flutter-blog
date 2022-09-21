@@ -11,7 +11,7 @@ const createPostUrl = "$baseUrl/createPost";
 
 //Errors
 const serviceError = "Server Error";
-
+const unauthorized = 'login failed';
 
 // DECORATION FUNCTION
 InputDecoration textInputDecor(String label){
