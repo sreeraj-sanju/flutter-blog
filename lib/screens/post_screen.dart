@@ -8,6 +8,13 @@ class PostScreen extends StatefulWidget {
 }
 
 class _PostScreenState extends State<PostScreen> {
+
+  List<dynamic> postList=[];
+  int userId = 0;
+  bool loading =true;
+
+  // GET ALL POSTS
+  
   @override
   Widget build(BuildContext context) {
     return Container(

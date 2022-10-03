@@ -97,7 +97,7 @@ class _RegisterState extends State<Register> {
               }
             }),
             const SizedBox(height: 10,),
-            srLogRegHint("Already an account?", " Login", (){
+            srLogRegHint("Already have an account?", " Login", (){
               Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>Login()), (route)=>false);
             })
           ]

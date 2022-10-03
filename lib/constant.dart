@@ -6,9 +6,12 @@ const baseUrl = "http://localhost:8002/api";
 const loginUrl = "$baseUrl/blog_login";
 const registerUrl = "$baseUrl/registration";
 const userUrl = "$baseUrl/get_user";
+const getPostUrl = "$baseUrl/getPost";
+const createPostUrl = "$baseUrl/createPost";
+
 //Errors
 const serviceError = "Server Error";
-
+const unauthorized = 'login failed';
 
 // DECORATION FUNCTION
 InputDecoration textInputDecor(String label){
