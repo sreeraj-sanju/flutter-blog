@@ -14,14 +14,18 @@ Future<ApiResponse> login(String email, String password) async {
     final response = await http.post(Uri.parse(loginUrl),
         headers: {'Accept': 'application/json'},
         body: {'email': email, 'password': password});
-
+   
     switch (response.statusCode) {
       case 200:
         apiResponse.data = User.fromJson(jsonDecode(response.body));
         break;
       case 422:
         final errors = jsonDecode(response.body)['errors'];
-        apiResponse.error = errors[errors.keys.elementAt(0)[0]];
+        apiResponse.error = validationError;
+        break;
+      case 400:
+  
+        apiResponse.error = "User not Found. Register First";
         break;
       default:
         apiResponse.error = serviceError;
@@ -106,8 +110,8 @@ Future<bool> logout() async {
 // END FUNCTION FOR LOG OUT
 
 // START FUNCTION FOR BASE 64 ENCODING
-String? getStringImage(File? file){
-  if(file == null) return null;
+String? getStringImage(File? file) {
+  if (file == null) return null;
   return base64Encode(file.readAsBytesSync());
 }
 // END FUNCTION FOR BASE 64 ENCODING

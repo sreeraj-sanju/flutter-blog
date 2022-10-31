@@ -1,8 +1,9 @@
 //Routes
 import 'package:flutter/material.dart';
+
 // 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
 // const baseUrl = "http://localhost:8000/api";
-const baseUrl = "http://localhost/api";
+const baseUrl = "http://localhost:8002/api";
 const loginUrl = "$baseUrl/blog_login";
 const registerUrl = "$baseUrl/registration";
 const userUrl = "$baseUrl/get_user";
@@ -12,38 +13,44 @@ const createPostUrl = "$baseUrl/createPost";
 //Errors
 const serviceError = "Server Error";
 const unauthorized = 'login failed';
+const validationError = "Invalid Credentials";
 
 // DECORATION FUNCTION
-InputDecoration textInputDecor(String label){
+InputDecoration textInputDecor(String label) {
   return InputDecoration(
       labelText: label,
       contentPadding: const EdgeInsets.all(10),
-      border: const OutlineInputBorder(borderSide: BorderSide(width: 1, ))
-  );
-} 
+      border: const OutlineInputBorder(
+          borderSide: BorderSide(
+        width: 1,
+      )));
+}
 
 // BUTTON STYLING
-ElevatedButton srButton(String label, Function onPressed){
+ElevatedButton srButton(String label, Function onPressed) {
   return ElevatedButton(
-      style: ButtonStyle(
-        backgroundColor: MaterialStateColor.resolveWith((states) => Colors.blue),
-        padding: MaterialStateProperty.resolveWith((states) => const EdgeInsets.symmetric(vertical: 10))
-      ),
-      onPressed: ()=> onPressed(),
-      child: Text(label, style: const TextStyle(color: Colors.white),), 
-    );
+    style: ButtonStyle(
+        backgroundColor:
+            MaterialStateColor.resolveWith((states) => Colors.blue),
+        padding: MaterialStateProperty.resolveWith(
+            (states) => const EdgeInsets.symmetric(vertical: 10))),
+    onPressed: () => onPressed(),
+    child: Text(
+      label,
+      style: const TextStyle(color: Colors.white),
+    ),
+  );
 }
 
 // LOGIN REGISTER HINT
-Row srLogRegHint(String text, String label, Function onTap){
+Row srLogRegHint(String text, String label, Function onTap) {
   return Row(
     mainAxisAlignment: MainAxisAlignment.center,
     children: [
-    Text(text),
-    GestureDetector(
-      child: Text(label, style: const TextStyle(color: Colors.blue)),
-      onTap: () => onTap()
-    )
-  ],
+      Text(text),
+      GestureDetector(
+          child: Text(label, style: const TextStyle(color: Colors.blue)),
+          onTap: () => onTap())
+    ],
   );
 }

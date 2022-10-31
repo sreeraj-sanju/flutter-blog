@@ -17,35 +17,39 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-
   // VARIABLE USED FOR TAKING THE VALUES
   final GlobalKey<FormState> formkey = GlobalKey<FormState>();
   TextEditingController txtEmail = TextEditingController();
   TextEditingController password = TextEditingController();
   bool loading = false;
   // FUNCTION FOR LOGIN API CALL
-  void _LoginUser() async{
+  // ignore: non_constant_identifier_names
+  void _LoginUser() async {
     ApiResponse response = await login(txtEmail.text, password.text);
-    
-    if(response.error==null){
-       _saveAndRedirectToHome(response.data as User);
-    }else{
+
+    if (response.error == null) {
+      _saveAndRedirectToHome(response.data as User);
+    } else {
       setState(() {
         loading = false;
       });
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text("${response.error}"),
-        ));
+        content: Text("${response.error}"),
+        backgroundColor: Color.fromARGB(255, 61, 8, 4),
+      ));
     }
   }
+
   void _saveAndRedirectToHome(User user) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     await pref.setInt('token', user.token ?? 0);
     // await pref.setInt('token', user.id ?? 0);
-     // ignore: use_build_context_synchronously
-     Navigator.of(context).pushAndRemoveUntil(
-            MaterialPageRoute(builder: (context) => const Home()), (route) => false);
+    // ignore: use_build_context_synchronously
+    Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute(builder: (context) => const Home()),
+        (route) => false);
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,42 +58,48 @@ class _LoginState extends State<Login> {
         centerTitle: true,
       ),
       body: Form(
-        key: formkey,
-        child: ListView(
-          padding: const EdgeInsets.all(30),
-          children:[
+          key: formkey,
+          child: ListView(padding: const EdgeInsets.all(30), children: [
             TextFormField(
-              keyboardType: TextInputType.emailAddress,
-              controller: txtEmail,
-              validator: (val)=> val!.isEmpty ? "Enter E-mail Address": null,
-              decoration: textInputDecor('Email')
+                keyboardType: TextInputType.emailAddress,
+                controller: txtEmail,
+                validator: (val) =>
+                    val!.isEmpty ? "Enter E-mail Address" : null,
+                decoration: textInputDecor('Email')),
+            const SizedBox(
+              height: 10,
             ),
-            const SizedBox(height: 10,),
             TextFormField(
-              obscureText: true,
-              controller: password,
-              validator: (val)=> val!.isEmpty ? "Enter the password": null,
-              decoration: textInputDecor('Password')
+                obscureText: true,
+                controller: password,
+                validator: (val) => val!.isEmpty ? "Enter the password" : null,
+                decoration: textInputDecor('Password')),
+            const SizedBox(
+              height: 10,
             ),
-            const SizedBox(height: 10,),
-            loading ? const Center(child: CircularProgressIndicator(
-              backgroundColor: Colors.white70,
-            ),):
-            srButton('Login', (){
-              if(formkey.currentState!.validate()){
-                setState(() {
-                  loading = true;
-                   _LoginUser();
-                });
-              }
-            }),
-            const SizedBox(height: 10,),
-            srLogRegHint("Don't have an account?", " Register", (){
-              Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>Register()), (route)=>false);
+            loading
+                ? const Center(
+                    child: CircularProgressIndicator(
+                      backgroundColor: Colors.white70,
+                    ),
+                  )
+                : srButton('Login', () {
+                    if (formkey.currentState!.validate()) {
+                      setState(() {
+                        loading = true;
+                        _LoginUser();
+                      });
+                    }
+                  }),
+            const SizedBox(
+              height: 10,
+            ),
+            srLogRegHint("Don't have an account?", " Register", () {
+              Navigator.of(context).pushAndRemoveUntil(
+                  MaterialPageRoute(builder: (context) => Register()),
+                  (route) => false);
             })
-          ]
-        )
-      ),
+          ])),
     );
   }
 }
