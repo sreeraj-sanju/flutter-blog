@@ -1,8 +1,8 @@
 //Routes
 import 'package:flutter/material.dart';
-
+// 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
 // const baseUrl = "http://localhost:8000/api";
-const baseUrl = "http://localhost:8002/api";
+const baseUrl = "http://localhost/api";
 const loginUrl = "$baseUrl/blog_login";
 const registerUrl = "$baseUrl/registration";
 const userUrl = "$baseUrl/get_user";
