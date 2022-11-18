@@ -35,7 +35,7 @@ class _LoginState extends State<Login> {
       });
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text("${response.error}"),
-        backgroundColor: Color.fromARGB(255, 61, 8, 4),
+        backgroundColor: Color.fromARGB(255, 100, 34, 29),
       ));
     }
   }
